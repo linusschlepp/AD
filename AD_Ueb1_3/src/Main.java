@@ -6,32 +6,27 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 
-		int[][] test_matrix;
-		int[][] test_matrix2;
-		int[][] test_matrix3;
-		int[][] test_matrix4;
+		int[][] testMatrix;
+		int[][] testMatrix2;
+		int[][] testMatrix3;
+		int[][] testMatrix4;
 		
-		test_matrix = Matrix.befill();
-		test_matrix2 = Matrix.befill();
-//	Matrix.Print(test_matrix);
-	//	Matrix.Print(test_matrix2);
+		testMatrix = Matrix.befill();
+		testMatrix2 = Matrix.befill();
 		long timestamp1 = System.currentTimeMillis();
-		test_matrix3 = Matrix.Add(test_matrix, test_matrix2);
+		testMatrix3 = Matrix.add(testMatrix, testMatrix2);
 		long timestamp2 = System.currentTimeMillis();
-		// System.out.println(("delta: "+ (timestamp2-timestamp1)));
-		System.out.println(Matrix.getAdd(test_matrix.length, test_matrix2.length ));
+		System.out.println(Matrix.getAdd(testMatrix.length, testMatrix2.length ));
 		long timestamp3 = System.currentTimeMillis();
-		test_matrix4 = Matrix.Mult(test_matrix, test_matrix2);
+		testMatrix4 = Matrix.mult(testMatrix, testMatrix2);
 		long timestamp4= System.currentTimeMillis();
 		
 		
-	//	System.out.println(("delta1: "+ (timestamp4-timestamp3)));
-	//	 Matrix.Print(test_matrix3);
-	//	Matrix.Print(test_matrix4);
+	
 		
 		
 
-System.out.println(Matrix.getMult(test_matrix.length, test_matrix2.length, test_matrix4.length ));
+System.out.println(Matrix.getMult(testMatrix.length, testMatrix2.length, testMatrix4.length ));
 
 
 	}

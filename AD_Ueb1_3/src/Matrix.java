@@ -13,26 +13,26 @@ public abstract class Matrix {
 	
 
 
-	public static int[][] Init() {
+	public static int[][] init() {
 
-		int[][] Matrix_0 = new int[n][m];
+		int[][] matrix = new int[n][m];
 
-		for (int i = 0; i < Matrix_0.length; i++) {
-			for (int j = 0; j < Matrix_0[i].length; j++) {
-				Matrix_0[i][j] = 0;
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				matrix[i][j] = 0;
 			}
 
 		}
 
-		return Matrix_0;
+		return matrix;
 
 	}
 
-	public static void Print(int[][] Matrix_0) {
+	public static void printMatrix(int[][] matrix) {
 
-		for (int i = 0; i < Matrix_0.length; i++) {
-			for (int j = 0; j < Matrix_0[i].length; j++) {
-				System.out.print(Matrix_0[i][j] + " ");
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				System.out.print(matrix[i][j] + " ");
 			}
 			System.out.println();
 
@@ -42,49 +42,49 @@ public abstract class Matrix {
 
 	}
 
-	public static int[][] Input() {
-		int[][] Matrix_0 = new int[n][m];
+	public static int[][] input() {
+		int[][] matrix = new int[n][m];
 
-		for (int i = 0; i < Matrix_0.length; i++) {
-			for (int j = 0; j < Matrix_0[i].length; j++) {
-				Matrix_0[i][j] = input.nextInt();
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				matrix[i][j] = input.nextInt();
 			}
 			System.out.println();
 
 		}
 
-		return Matrix_0;
+		return matrix;
 	}
 
-	public static int[][] Add(int[][] Matrix, int[][] Matrix_0) {
+	public static int[][] add(int[][] matrix, int[][] matrix2) {
 		
 		
-		if (check(Matrix, Matrix_0)) {
+		if (check(matrix, matrix2)) {
 
-			int[][] Matrix_sol = new int[n][m];
+			int[][] matrixSolution = new int[n][m];
 
-			for (int i = 0; i < Matrix_sol.length; i++) {
-				for (int j = 0; j < Matrix_sol[i].length; j++) {
-					Matrix_sol[i][j] = Matrix[i][j] + Matrix_0[i][j];
+			for (int i = 0; i < matrixSolution.length; i++) {
+				for (int j = 0; j < matrixSolution[i].length; j++) {
+					matrixSolution[i][j] = matrix[i][j] + matrix2[i][j];
 				}
 
 			}
 			
 			
-			return Matrix_sol;
+			return matrixSolution;
 		} else {
 			return null;
 		}
 	}
 
-	public static int[][] Mult(int[][] Matrix, int[][] Matrix_0) {
-		if (check(Matrix, Matrix_0)) {
-			int[][] retMatrix = new int[Matrix.length][Matrix_0[0].length];
+	public static int[][] mult(int[][] matrix, int[][] matrix2) {
+		if (check(matrix, matrix2)) {
+			int[][] retMatrix = new int[matrix.length][matrix2[0].length];
 
-			for (int i = 0; i < Matrix.length; i++) {
-				for (int j = 0; j < Matrix[0].length; j++) {
-					for (int k = 0; k < Matrix[0].length; k++) {
-						retMatrix[i][j] = (Matrix[i][j] * Matrix_0[k][j]);
+			for (int i = 0; i < matrix.length; i++) {
+				for (int j = 0; j < matrix[0].length; j++) {
+					for (int k = 0; k < matrix[0].length; k++) {
+						retMatrix[i][j] = (matrix[i][j] * matrix2[k][j]);
 					}
 				}
 			}
@@ -99,10 +99,10 @@ public abstract class Matrix {
 	}
 
 	
-	public static boolean check(int[][] Matrix, int[][] Matrix_0) {
-		if ((Matrix.length == Matrix_0.length) && (Matrix[0].length == Matrix_0[0].length)) {
+	public static boolean check(int[][] matrix, int[][] matrix2) {
+		if ((matrix.length == matrix2.length) && (matrix[0].length == matrix2[0].length)) {
 			return true;
-		} else if ((Matrix.length == Matrix_0[0].length) && (Matrix[0].length == Matrix[0].length)) {
+		} else if ((matrix.length == matrix2[0].length) && (matrix[0].length == matrix[0].length)) {
 			return true;
 		} else {
 			return false;
@@ -112,37 +112,37 @@ public abstract class Matrix {
 	public static int[][] befill() {
 		Random ran = new Random();
 
-		int[][] Matrix_0 = new int[n][m];
-		for (int i = 0; i < Matrix_0.length; i++) {
-			for (int j = 0; j < Matrix_0[i].length; j++) {
-				Matrix_0[i][j] = ran.nextInt(10);
+		int[][] matrix = new int[n][m];
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				matrix[i][j] = ran.nextInt(10);
 			}
 
 		}
 
-		return Matrix_0;
+		return matrix;
 	}
 	
 	public static BigInteger getAdd(int n, int m)
 	{
 		
-		BigInteger big_m = new BigInteger((String.valueOf(m)));
-		BigInteger big_n = new BigInteger((String.valueOf(n)));
+		BigInteger bigM = new BigInteger((String.valueOf(m)));
+		BigInteger bigN = new BigInteger((String.valueOf(n)));
 		
-		return big_m.multiply(big_n);
+		return bigM.multiply(bigN);
 		
 	}
 	
 	public static BigInteger getMult(int m, int n, int k)
 	{
 		
-		BigInteger big_m = new BigInteger((String.valueOf(m)));
-		BigInteger big_n = new BigInteger((String.valueOf(n)));
-		BigInteger big_k = new BigInteger((String.valueOf(k)));
+		BigInteger bigM = new BigInteger((String.valueOf(m)));
+		BigInteger bigN = new BigInteger((String.valueOf(n)));
+		BigInteger bigK = new BigInteger((String.valueOf(k)));
 	
 		
-		return big_m.multiply((big_n.multiply(big_k)));
-		//return (float) m*(k*n);
+		return bigM.multiply((bigN.multiply(bigK)));
+		
 		
 	}
 
