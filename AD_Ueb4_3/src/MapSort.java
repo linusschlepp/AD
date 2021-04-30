@@ -11,8 +11,7 @@ public class MapSort {
 		int temp = 0;
 		
 		
-		for(i = 0; i < newn; i++ )
-			bin[i] = -1;
+		
 		for(i=0; i < n; i++)
 		{
 			if(a[i]<min)
@@ -26,14 +25,15 @@ public class MapSort {
 			{
 				int t = (int) ((double) (a[i]-min)/dist), insert=a[i], left = 0;
 				
-				if(bin[t] != -1 && insert <= bin[t])
-					left =1;
+				if(bin[t] != 0 && insert <= bin[t])
+					left = 1;
 				
-				while(bin[t] != -1)
+				while(bin[t] != 0)
 				{
 					if(left == 1 )
 					{
 						if(insert > bin[t])
+							
 							temp = bin[t];
 							bin[t] = insert;
 							insert = temp;
@@ -63,12 +63,12 @@ public class MapSort {
 			}
 			for(i = 0; i <newn; i++)
 			
-				if(bin[i] != -1)
+				if(bin[i] != 0)
 					a[j++] = bin[i];
 
 			
 		bin = null;
-		Arrays.toString(a);	
+			
 		}
 	}
 	
