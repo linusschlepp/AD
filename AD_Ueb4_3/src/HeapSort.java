@@ -1,6 +1,8 @@
 import java.util.Arrays;
 
 public class HeapSort {
+	
+	static int counter = 0;
 
 	static void Heapify(int a[], int f, int l, int root) {
 		int largest, left = f + (root - f) * 2 + 1, right = f + (root - f) * 2 + 2, temp;
@@ -16,7 +18,7 @@ public class HeapSort {
 			a[largest] = temp;
 			Heapify(a, f, l, largest);
 		}
-		System.out.println(Arrays.toString(a));
+		setCounter(1);
 	}
 
 	static void heapSort(int a[], int f, int l) {
@@ -37,5 +39,15 @@ public class HeapSort {
 		{
 			Heapify(a,f,l,i);
 		}
+	}
+	
+	static void setCounter(int countInc)
+	{
+		counter += countInc;
+	}
+	
+	static int getCounter()
+	{
+		return counter;
 	}
 }

@@ -6,13 +6,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		int k = 30;
-		//int a[] = getRanArray(k);
-		int a[] = {7 ,5 ,7, 4, 3 ,8, 3};
+		int a[] = getRanArray(100000);
+
 		System.out.println(Arrays.toString(a));
-		// MapSort.mapSort(a, a.length-1, 1.30);
-	//	CountSortAdvanced.countSortAdvanced(a, a.length, 8);
-		CountSort.countSort(a, a.length, 8);
-		System.out.println(Arrays.toString(a));
+		long timeStampBefore = System.currentTimeMillis();
+		a= CountSortAdvanced.countSortAdvanced(a, a.length-1, 10000);
+		System.out.println(Arrays.toString(a) + "\n" + (System.currentTimeMillis() - timeStampBefore));
+		System.out.println(CountSortAdvanced.getCounter());
+		// a= CountSortAdvanced.countSortAdvanced(a, a.length-1, 10000);
+		// System.out.println(Arrays.toString(a));
 
 	}
 

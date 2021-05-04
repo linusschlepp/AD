@@ -1,6 +1,8 @@
 
 public class CountSort {
 
+	static int counter = 0;
+	
 	static void countSort(int a[], int n, int k) {
 		int i, j = 1;
 		int[] bin = new int[k + 1];
@@ -17,6 +19,7 @@ public class CountSort {
 			 **/
 			
 			bin[a[i]]++;
+			setCounter(1);
 		}
 		// for-Schleife iteriert durch komplettes Array
 		for (i = 0; i < n; i++) {
@@ -33,6 +36,7 @@ public class CountSort {
 			while (bin[j] == 0)
 			{
 				j++;
+				setCounter(1);
 			}
 			/**
 			 * Wert wird an die richtige Stelle im Array gesetzt,
@@ -41,8 +45,19 @@ public class CountSort {
 			 */
 			a[i] = j;
 			bin[j]--;
+			setCounter(1);
 		}
 		bin = null;
 	}
+	
+	public static void setCounter(int increment)
+	{
+		counter += increment;
+	}
+	public static int getCounter()
+	{
+		return counter;
+	}
+	
 
 }
