@@ -66,25 +66,20 @@ public class LinkedList {
 		}
 	}
 
-	public int[] convertToArray() {
-
-		Node le = startNode;
-		int temp = 0;
-		int[] retArray = new int[getSize()];
-		int counter = 0;
-
-		while (le != null) {
-			temp = (int) le.getObj();
-
-			retArray[counter] = temp;
-			le = le.getNextNode();
-			counter++;
-		}
-
-		return retArray;
-
-	}
-
+	/*
+	 * public int[] convertToArray() {
+	 * 
+	 * Node le = startNode; int temp = 0; int[] retArray = new int[getSize()]; int
+	 * counter = 0;
+	 * 
+	 * while (le != null) { temp = (int) le.getObj();
+	 * 
+	 * retArray[counter] = temp; le = le.getNextNode(); counter++; }
+	 * 
+	 * return retArray;
+	 * 
+	 * }
+	 */
 	public int getSize() {
 		int sizeCounter = 0;
 		Node le = startNode;
@@ -97,16 +92,10 @@ public class LinkedList {
 
 		return sizeCounter;
 	}
-
-	public boolean find(Object o) {
-		Node le = startNode;
-		while (le != null) {
-			if (le.getObj().equals(o))
-				return true;
-			le = le.nextElem;
-		}
-		return false;
-	}
+	/*
+	 * public boolean find(Object o) { Node le = startNode; while (le != null) { if
+	 * (le.getObj().equals(o)) return true; le = le.nextElem; } return false; }
+	 */
 
 	public Node getFirstNode() {
 		return startNode;
@@ -127,9 +116,10 @@ public class LinkedList {
 	public void printList() {
 		Node le = startNode;
 		while (le != null) {
-			System.out.println(le.getObj());
+			System.out.print(le.getObj() + ", ");
 			le = le.getNextNode();
 		}
+		System.out.println();
 	}
 
 	public Node getNodeAt(int location) {
@@ -150,62 +140,117 @@ public class LinkedList {
 
 		return temp;
 	}
-	
-	public void swapNodes(int location1, int location2)
-	{
-		Node temp = getNodeAt(location1);
-		Node temp2 = getNodeAt(location2);
-		Node le = startNode;
-		int counter = 0;
-		
-		while(le.getNextNode() != null && temp.equals(temp2))
-			
-		
-		
+
+	public Node findPreviousNode(Node node) {
+
+		Node temp = startNode;
+		while (temp.getNextNode() != null && !(temp.getNextNode().equals(node))) {
+			temp = temp.getNextNode();
+		}
+		return temp;
 	}
 
-	
-	public void sort() {
-		this.a = a;
+	public void swapNodes(int location1, int location2) {
 
-		
-		Node f = startNode;
-		Node l = getNodeAt(getSize());
+		if (location1 > getSize() || location2 > getSize())
+			throw new IndexOutOfBoundsException();
+
+		Node swapNode1, swapNode2;
+
+		if (location1 < location2) {
+			swapNode1 = getNodeAt(location1);
+			swapNode2 = getNodeAt(location2);
+
+		} else if (location1 > location2) {
+			swapNode1 = getNodeAt(location2);
+			swapNode2 = getNodeAt(location1);
+
+		} else
+			return;
+
+		Node swapNode1Previous = findPreviousNode(swapNode1);
+		Node swapNode2Previous = findPreviousNode(swapNode2);
+
+		Node swapNode1Next = swapNode1.getNextNode();
+		Node swapNode2Next = swapNode2.getNextNode();
+
+		if (swapNode1.equals(startNode) && swapNode2.getNextNode() == null) {
+
+			swapNode1.setNextNode(null);
+			swapNode2Previous.setNextNode(swapNode1);
+			swapNode2.setNextNode(swapNode1Next);
+			startNode = swapNode2;
+
+		} else if (swapNode1.getNextNode() == swapNode2) {
+			if (swapNode1.equals(startNode)) {
+				swapNode1.setNextNode(swapNode2Next);
+				swapNode2.setNextNode(swapNode1);
+				startNode = swapNode2;
+
+			} else if (swapNode2.getNextNode() == null) {
+				swapNode1.setNextNode(null);
+				swapNode2.setNextNode(swapNode1);
+				swapNode1Previous.setNextNode(swapNode2);
+			} else {
+				swapNode1.setNextNode(swapNode2Next);
+				swapNode1Previous.setNextNode(swapNode2);;
+				swapNode2.setNextNode(swapNode1);
+			}
+
+		} else if (swapNode1.equals(startNode)) {
+
+			swapNode1.setNextNode(swapNode2Next);
+			swapNode2Previous.setNextNode(swapNode1);
+			swapNode2.setNextNode(swapNode1Next);
+			startNode = swapNode2;
+
+		} else if (swapNode2.getNextNode() == null) {
+
+			swapNode1.setNextNode(null);
+			swapNode1Previous.setNextNode(swapNode2);
+			swapNode2Previous.setNextNode(swapNode1);
+			swapNode2.setNextNode(swapNode1Next);
+
+		} else {
+
+			swapNode1.setNextNode(swapNode2Next);
+			swapNode1Previous.setNextNode(swapNode2);
+			swapNode2.setNextNode(swapNode1Next);
+			swapNode2Previous.setNextNode(swapNode1);
+		}
+
+	}
+
+	public void sort() { quickSort(1, getSize()); }
+	
+	
+	private void quickSort(int firstNode, int lastNode)
+	{
 		int part = 0;
-		if ((int) f.getObj() < (int) l.getObj()) {
-			part = preparePartition(f, l, part);
+		if (firstNode <= lastNode) {
+			part = preparePartition(firstNode, lastNode, part);
 			// Sortiert werte links
-			sort(a, f, part - 1);
+			quickSort(firstNode, part - 1);
 			// Sortiert werte rechts
-			sort(a, part + 1, l);
+			quickSort(part + 1, lastNode);
 
 		}
-		System.out.println(Arrays.toString(a));
+		
 	}
 
+	private int preparePartition(int firstNode, int lastNode, int part) {
 
-	public int preparePartition(Node f, Node l, int part) {
+		int pivot = (int) getNodeAt(firstNode).getObj();
+		part = firstNode - 1;
 
-	
-		
-		
-		Node temp = null;
-		Node pivot = getNodeAt(0);
-		part = 0 - 1;
-
-		for (int i = (int) f.getObj(); i <= (int) l.getObj(); i++) {
-			if ((int) (getNodeAt(i).getObj())<= (int) pivot.getObj()) {
+		for (int i = firstNode; i <= lastNode; i++) {
+			if ((int) (getNodeAt(i).getObj()) <= pivot) {
 				part++;
-				temp = a[part];
-				a[part] = a[i];
-				a[i] = temp;
-
+				swapNodes(i, part);
 			}
 		}
 
-		temp = a[part];
-		a[part] = a[f];
-		a[f] = temp;
+		swapNodes(part, firstNode);
 
 		return part;
 	}

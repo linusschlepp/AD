@@ -4,25 +4,30 @@ public class Node {
 	
 	 Object obj;
 
-	    Node nextElem;
+	    private Node nextNode;
+	    private Node prevNode;
 
 	    public Node()
 	    {
 	    	this.obj = null;
-	    	nextElem = null;
+	    	nextNode = null;
+	    	prevNode = null;
 	    }
 	    
 	    public Node(Object obj) {
 	        this.obj = obj;
-	        nextElem = null;
+	        nextNode = null;
 	    }
 
 	    public void setNextNode(Node nextElem) {
-	        this.nextElem = nextElem;
+	        this.nextNode = nextElem;
 	    }
 
 	    public Node getNextNode() {
-	        return nextElem;
+	        return nextNode;
+	    }
+	    public Node getPrevNode() {
+	        return prevNode;
 	    }
 
 	    public Object getObj() {
@@ -33,5 +38,7 @@ public class Node {
 	    {
 	    	this.obj = thisNode;
 	    }
+	    
+	    
 	
 }
