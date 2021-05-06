@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class Main {
 
@@ -6,11 +5,8 @@ public class Main {
 	
 		
 		LinkedList ll = new LinkedList();
-		Node testNode = new Node();
 		
 	
-		
-		
 		ll.add(7);
 		ll.add(8);
 		ll.add(53);
@@ -23,6 +19,8 @@ public class Main {
 		ll.add(7);
 		ll.printList();
 		ll.sort();
+		ll.printList();
+		ll.deleteList();
 		ll.printList();
 		
 		

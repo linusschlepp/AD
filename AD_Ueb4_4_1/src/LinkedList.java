@@ -1,47 +1,29 @@
-import java.util.*;
 
 public class LinkedList {
 
-	static int counter = 0;
-
 	Node startNode;
-	int[] a;
 
-	public void add(Object o) {
+	public void add(int value) {
 
-		if (counter == 0) {
-			startNode = new Node(o);
-			counter++;
-		} else {
-			Node newElem = new Node(o);
-			Node lastElem = getLastNode();
-			lastElem.setNextNode(newElem);
+		if (isEmpty())
+			startNode = new Node(value);
+		else {
+			Node newNode = new Node(value);
+			Node lastNode = getLastNode();
+			lastNode.setNextNode(newNode);
 		}
-
 	}
 
-	public void insertAfter(Object prevItem, Object newItem) {
-		Node newElem, nextElem, pointerElem;
-		pointerElem = startNode.getNextNode();
-		while (pointerElem != null && !pointerElem.getObj().equals(prevItem)) {
-			pointerElem = pointerElem.getNextNode();
-		}
-		newElem = new Node(newItem);
-		nextElem = pointerElem.getNextNode();
-		pointerElem.setNextNode(newElem);
-		newElem.setNextNode(nextElem);
-	}
-
-	public void delete(Object o) {
+	public void delete(int value) {
 		Node le = startNode;
 
-		if (le.equals(o)) {
+		if (le.getValue() == value) {
 			startNode = null;
 			return;
 		}
 
-		while (le.getNextNode() != null && !le.getObj().equals(o)) {
-			if (le.getNextNode().getObj().equals(o)) {
+		while (le.getNextNode() != null && (le.getValue() != value)) {
+			if (le.getNextNode().getValue() == value) {
 				if (le.getNextNode().getNextNode() != null)
 					le.setNextNode(le.getNextNode().getNextNode());
 				else {
@@ -53,33 +35,38 @@ public class LinkedList {
 		}
 	}
 
+	public boolean isEmpty() {
+		if (getSize() == 0)
+			return true;
+		else
+			return false;
+
+	}
+
 	public void deleteList() {
 		Node le = startNode;
-		Node temp;
-
-		while (le != null) {
-
-			temp = le;
-			le = null;
-			le = temp.getNextNode();
-
+		for (int i = 1; i <= getSize(); i++) {
+			delete(getNodeAt(i).getValue());
+			le = le.getNextNode();
 		}
 	}
 
-	/*
-	 * public int[] convertToArray() {
-	 * 
-	 * Node le = startNode; int temp = 0; int[] retArray = new int[getSize()]; int
-	 * counter = 0;
-	 * 
-	 * while (le != null) { temp = (int) le.getObj();
-	 * 
-	 * retArray[counter] = temp; le = le.getNextNode(); counter++; }
-	 * 
-	 * return retArray;
-	 * 
-	 * }
-	 */
+	public int[] convertToIntArray() {
+
+		Node le = startNode;
+		int[] retArray = new int[getSize()];
+		int counter = 0;
+
+		while (le != null) {
+			retArray[counter] = le.getValue();
+			le = le.getNextNode();
+			counter++;
+		}
+
+		return retArray;
+
+	}
+
 	public int getSize() {
 		int sizeCounter = 0;
 		Node le = startNode;
@@ -92,16 +79,12 @@ public class LinkedList {
 
 		return sizeCounter;
 	}
-	/*
-	 * public boolean find(Object o) { Node le = startNode; while (le != null) { if
-	 * (le.getObj().equals(o)) return true; le = le.nextElem; } return false; }
-	 */
 
 	public Node getFirstNode() {
 		return startNode;
 	}
 
-	public void setFirstElem(Node startNode) {
+	private void setFirstNode(Node startNode) {
 		this.startNode = startNode;
 	}
 
@@ -115,10 +98,17 @@ public class LinkedList {
 
 	public void printList() {
 		Node le = startNode;
+		int counter = 0;
+		System.out.print("[ ");
 		while (le != null) {
-			System.out.print(le.getObj() + ", ");
+			if (counter != getSize() - 1)
+				System.out.print(le.getValue() + ", ");
+			else
+				System.out.print(le.getValue());
 			le = le.getNextNode();
+			counter++;
 		}
+		System.out.print(" ]");
 		System.out.println();
 	}
 
@@ -141,7 +131,7 @@ public class LinkedList {
 		return temp;
 	}
 
-	public Node findPreviousNode(Node node) {
+	public Node getPrevNode(Node node) {
 
 		Node temp = startNode;
 		while (temp.getNextNode() != null && !(temp.getNextNode().equals(node))) {
@@ -167,52 +157,64 @@ public class LinkedList {
 
 		} else
 			return;
-
-		Node swapNode1Previous = findPreviousNode(swapNode1);
-		Node swapNode2Previous = findPreviousNode(swapNode2);
-
+		// Knoten werden auf VorgängerKnoten gesetzt
+		Node swapNode1Previous = getPrevNode(swapNode1);
+		Node swapNode2Previous = getPrevNode(swapNode2);
+		// Knoten werden auf NachfolgerKnoten gesetzt
 		Node swapNode1Next = swapNode1.getNextNode();
 		Node swapNode2Next = swapNode2.getNextNode();
 
+		// Sonderfälle:
+		// Knoten1 ist der erste- und Knoten2 der letzte Knoten
 		if (swapNode1.equals(startNode) && swapNode2.getNextNode() == null) {
-
 			swapNode1.setNextNode(null);
 			swapNode2Previous.setNextNode(swapNode1);
 			swapNode2.setNextNode(swapNode1Next);
 			startNode = swapNode2;
 
+			// Die zwei Knoten liegen nebeneinander
 		} else if (swapNode1.getNextNode() == swapNode2) {
+			/*
+			 * Die zwei Knoten liegen nebeneinander und Knoten1 ist der erste Knoten in der
+			 * Liste
+			 */
 			if (swapNode1.equals(startNode)) {
 				swapNode1.setNextNode(swapNode2Next);
 				swapNode2.setNextNode(swapNode1);
 				startNode = swapNode2;
 
+				/*
+				 * Die zwei Knoten liegen nebeneinander und Knoten2 ist der letzte Knoten in der
+				 * Liste
+				 */
 			} else if (swapNode2.getNextNode() == null) {
 				swapNode1.setNextNode(null);
 				swapNode2.setNextNode(swapNode1);
 				swapNode1Previous.setNextNode(swapNode2);
 			} else {
 				swapNode1.setNextNode(swapNode2Next);
-				swapNode1Previous.setNextNode(swapNode2);;
+				swapNode1Previous.setNextNode(swapNode2);
 				swapNode2.setNextNode(swapNode1);
 			}
 
+			// Der zu tauschende Knoten1 ist der erste Knoten in der Liste
 		} else if (swapNode1.equals(startNode)) {
-
 			swapNode1.setNextNode(swapNode2Next);
 			swapNode2Previous.setNextNode(swapNode1);
 			swapNode2.setNextNode(swapNode1Next);
 			startNode = swapNode2;
 
+			// Der zu tauschende Knoten2 ist der letzte Knoten in der Liste
 		} else if (swapNode2.getNextNode() == null) {
-
 			swapNode1.setNextNode(null);
 			swapNode1Previous.setNextNode(swapNode2);
 			swapNode2Previous.setNextNode(swapNode1);
 			swapNode2.setNextNode(swapNode1Next);
-
+			/*
+			 * Die zwei Knoten sind in der Liste verteilt bzw entsprechen nicht den ersten
+			 * bzw. letzten Knoten in der Liste
+			 */
 		} else {
-
 			swapNode1.setNextNode(swapNode2Next);
 			swapNode1Previous.setNextNode(swapNode2);
 			swapNode2.setNextNode(swapNode1Next);
@@ -221,11 +223,11 @@ public class LinkedList {
 
 	}
 
-	public void sort() { quickSort(1, getSize()); }
-	
-	
-	private void quickSort(int firstNode, int lastNode)
-	{
+	public void sort() {
+		quickSort(1, getSize());
+	}
+
+	private void quickSort(int firstNode, int lastNode) {
 		int part = 0;
 		if (firstNode <= lastNode) {
 			part = preparePartition(firstNode, lastNode, part);
@@ -235,16 +237,16 @@ public class LinkedList {
 			quickSort(part + 1, lastNode);
 
 		}
-		
+
 	}
 
 	private int preparePartition(int firstNode, int lastNode, int part) {
 
-		int pivot = (int) getNodeAt(firstNode).getObj();
+		int pivot = getNodeAt(firstNode).getValue();
 		part = firstNode - 1;
 
 		for (int i = firstNode; i <= lastNode; i++) {
-			if ((int) (getNodeAt(i).getObj()) <= pivot) {
+			if (getNodeAt(i).getValue() <= pivot) {
 				part++;
 				swapNodes(i, part);
 			}
